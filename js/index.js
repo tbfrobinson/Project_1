@@ -4,6 +4,19 @@ canvas.setAttribute('height', getComputedStyle(canvas)['height'])
 canvas.setAttribute('width', getComputedStyle(canvas)['width'])
 // will use c a lot
 const c = canvas.getContext('2d')
+const start = document.querySelector('#start')
+
+start.addEventListener('click', game)
+
+let background = document.querySelector('#background')
+
+c.drawImage(background, 0, 0, canvas.height, canvas.width)
+
+let mainMenu = document.querySelector('#mainMenu')
+let restart = document.querySelector('#restart')
+
+// document selector ( to append buttons )
+let d = document.querySelector('body')
 
 // set what will pull our character downward
 let gravity = 0.6
@@ -109,8 +122,10 @@ function instructions() {
     const jumpHere = new Text(160, 580, 'jump up here!', 10)
     const yay = new Text(170, 550, 'nice', 20)
     const wow = new Text(175, 480, 'wow', 15)
+    const winning = new Text(150, 250, 'walk right to win!', 50)
 
    arrowKeys.append()
+   winning.append()
    jump.append()
    jumpHere.append()
    if(guy.position.x >= 135 && guy.position.x <= 225 && guy.position.y + guy.height >= 599 && guy.position.y + guy.height  <= 601){
@@ -127,12 +142,6 @@ const keys = {
     a: {
         pressed: false
     },
-    w: {
-        pressed: false
-    },
-    s: {
-        pressed: false
-    }
 }
 
 function collision() {
@@ -149,19 +158,51 @@ function crowTalk() {
     c.clearRect(0, 0, canvas.width, canvas.height)
 }
 
+function main() {
+    location.reload()
+}
+
+// winning
+function win() {
+    keys.d.pressed = false
+    keys.a.pressed = false
+
+    // console.log('dofiaje')
+
+    c.clearRect(0, 0, canvas.width, canvas.height)
+    const congrats = new Text(180, 300, 'YOU WIN', 70)
+    congrats.append()
+    mainMenu.style.display = 'block'
+    restart.style.display = 'block'
+    restart.addEventListener('click', () => {
+        c.clearRect(0, 0, canvas.width, canvas.height)
+        restart.style.display = 'none'
+        mainMenu.style.display = 'none'
+        guy.position.x = 0
+        guy.position.y = 10
+        game
+    })
+    mainMenu.addEventListener('click', main)
+
+}
+
+
 // the game function that will run when start button is pressed
 function game() {
+    start.style.display = 'none'
     c.clearRect(0, 0, canvas.width, canvas.height)
+    c.drawImage(background, 0, 0, canvas.height, canvas.width)
     tree.append()
     crow.append()
     plat.append()
-// basic movement and spawning guy
+    // basic movement and spawning guy
     instructions()
     guy.move()
-
+    
     // action
-    if(guy.position.x > 360) {
-        setInterval(crowTalk(), 10000)
+    // winning condition
+    if(guy.position.x > 635) {
+        win()
     }
     //spawn guy
     // make first screen
@@ -174,10 +215,9 @@ function game() {
     //set guy velocity
     // somehow made collision
     collision()
-    console.log(guy.position.x)
+    // console.log(guy.position.x)
 }
 
-game()
 
 //movement
 window.addEventListener('keydown', (e) => {

@@ -6,7 +6,7 @@ canvas.setAttribute('width', getComputedStyle(canvas)['width'])
 const c = canvas.getContext('2d')
 
 // set what will pull our character downward
-const gravity = 0.5
+let gravity = 0.6
 
 //character creation
 class Character {
@@ -80,9 +80,14 @@ class Text {
     }
 
 }
-const arrowKeys = new Text(150, 300, 'arrow keys to move left and right', 25)
-const jump = new Text(240, 330, 'and space to jump', 22)
-
+function instructions() {
+    const arrowKeys = new Text(150, 300, 'arrow keys to move left and right', 25)
+    const jump = new Text(240, 330, 'and space to jump', 22)
+    
+   arrowKeys.append()
+   jump.append()
+ 
+}
 // make keys array to look at for keypresses
 const keys = {
     d: {
@@ -115,10 +120,14 @@ function game() {
     guy.velocity.x = 0
     if (keys.d.pressed) {guy.velocity.x = 4}
         else if (keys.a.pressed) {guy.velocity.x = -4}
-    
-
-    arrowKeys.append()
-    jump.append()
+    instructions()
+// somehow made collision
+    if(guy.position.x >= 100 && guy.position.x <= 170 && guy.position.y + guy.height + guy.velocity.y  >= 600 && guy.position.y + guy.height <= 601 && guy.velocity.y !== 0){
+        // guy.position.y = 580
+        guy.velocity.y = 0
+    } else {
+        gravity = 0.6
+    }
 }
 
 game()

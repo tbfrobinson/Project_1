@@ -8,6 +8,7 @@ const c = canvas.getContext('2d')
 // set what will pull our character downward
 const gravity = 0.5
 
+//character creation
 class Character {
     // make position track instead of x or y
     constructor(position) {
@@ -47,6 +48,22 @@ const guy = new Character( {
     y: 0,
 })
 
+// platform creation
+class Platform {
+    constructor(position) {
+        this.position = position
+    }
+    append() {
+        c.fillStyle = 'grey'
+        c. fillRect(this.position.x, this.position.y, 70, 10)
+    }
+}
+
+const plat = new Platform( {
+    x: 100,
+    y: 600
+})
+
 // make keys array to look at for keypresses
 const keys = {
     d: {
@@ -70,7 +87,7 @@ function game() {
     // idk what this does completely but it makes it work
     //like animates it
     window.requestAnimationFrame(game)
-
+    plat.append()
     //spawn guy
     guy.move()
     //set guy velocity

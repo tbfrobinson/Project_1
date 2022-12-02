@@ -49,6 +49,8 @@ const guy = new Character( {
 })
 
 // platform creation
+
+// NEED TO // // MAKE PLATFORMS // // HAVE COLLISION
 class Platform {
     constructor(position) {
         this.position = position
@@ -63,6 +65,23 @@ const plat = new Platform( {
     x: 100,
     y: 600
 })
+
+class Text {
+    constructor(x, y, text, size){
+        this.x = x 
+        this.y = y
+        this.text = text
+        this.size = size
+    }
+    append() {
+        c.fillStyle = 'black'
+        c.font = `${this.size}px sans-serif`
+        c.fillText(this.text, this.x, this.y)
+    }
+
+}
+const arrowKeys = new Text(150, 300, 'arrow keys to move left and right', 25)
+const jump = new Text(240, 330, 'and space to jump', 22)
 
 // make keys array to look at for keypresses
 const keys = {
@@ -80,6 +99,8 @@ const keys = {
     }
 }
 
+
+
 // the game function that will run when start button is pressed
 function game() {
     // clear out the start screen
@@ -95,6 +116,9 @@ function game() {
     if (keys.d.pressed) {guy.velocity.x = 4}
         else if (keys.a.pressed) {guy.velocity.x = -4}
     
+
+    arrowKeys.append()
+    jump.append()
 }
 
 game()

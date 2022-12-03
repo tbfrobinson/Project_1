@@ -32,6 +32,7 @@ class Character {
             y: 1
         }
         this.height = 20
+        this.alive = true
     }
     // create onscreen
     append() {
@@ -95,6 +96,7 @@ class Text {
 
 }
 
+
 class Object {
     constructor(x, y, width, height, fillStyle){
         this.x = x
@@ -109,8 +111,8 @@ class Object {
     }
 }
 
-
-
+// OBJECTS //
+const spike = new Object (500, 630, 40, 40, 'grey')
 const crow = new Object (323, 570, 20, 20, 'black')
 const tree = new Object (300, 450, 65, 300, 'brown')
 
@@ -152,7 +154,7 @@ function collision() {
     if(guy.position.x >= 135 && guy.position.x <= 225 && guy.position.y + guy.height + guy.velocity.y  >= 600 && guy.position.y + guy.height <= 601 && guy.velocity.y !== 0){
         guy.velocity.y = 0
     } 
-
+    
 }
 function crowTalk() {
     c.clearRect(0, 0, canvas.width, canvas.height)
@@ -161,31 +163,52 @@ function crowTalk() {
 function main() {
     location.reload()
 }
+function restartGame(){ 
+c.clearRect(0, 0, canvas.width, canvas.height)
+restart.style.display = 'none'
+mainMenu.style.display = 'none'
+guy.position.x = 0
+guy.position.y = 10
+game
+}
 
 // winning
 function win() {
     keys.d.pressed = false
     keys.a.pressed = false
-
+    
     // console.log('dofiaje')
-
+    
     c.clearRect(0, 0, canvas.width, canvas.height)
     const congrats = new Text(180, 300, 'YOU WIN', 70)
     congrats.append()
     mainMenu.style.display = 'block'
     restart.style.display = 'block'
-    restart.addEventListener('click', () => {
-        c.clearRect(0, 0, canvas.width, canvas.height)
-        restart.style.display = 'none'
-        mainMenu.style.display = 'none'
-        guy.position.x = 0
-        guy.position.y = 10
-        game
-    })
+    restart.addEventListener('click', restartGame)
     mainMenu.addEventListener('click', main)
-
+    
 }
 
+function gameOver() {
+    keys.d.pressed = false
+    keys.a.pressed = false
+    guy.velocity.y = 0.1
+
+    c.clearRect(0, 0, canvas.width, canvas.height)
+    const gameOver = new Text(160, 300, 'LOL U DIED', 70)
+    gameOver.append()
+    mainMenu.style.display = 'block'
+    restart.style.display = 'block'
+    restart.addEventListener('click', restartGame)
+    mainMenu.addEventListener('click', main)
+}
+
+function takeDamage() {
+    if(guy.position.x >= 480 && guy.position.x <= 540 && guy.position.y + guy.height >= 630) {
+        guy.alive = false
+        gameOver()
+    }
+}
 
 // the game function that will run when start button is pressed
 function game() {
@@ -194,11 +217,11 @@ function game() {
     c.drawImage(background, 0, 0, canvas.height, canvas.width)
     tree.append()
     crow.append()
+    spike.append()
     plat.append()
     // basic movement and spawning guy
     instructions()
     guy.move()
-    
     // action
     // winning condition
     if(guy.position.x > 635) {
@@ -206,7 +229,7 @@ function game() {
     }
     //spawn guy
     // make first screen
-    
+    takeDamage()
 
     // idk what this does completely but it makes it work
     //like animates it

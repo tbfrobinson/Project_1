@@ -21,10 +21,11 @@ canvas {
 
 #start {
     position: absolute;
-    left: 40%;
-    top: 33%;
+    left: 50%;
+    top: 40%;
     width: 200px;
     padding: 10px;
+    transform: translate(-50%, -50%)
 }
 
 #restart {

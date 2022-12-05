@@ -1,3 +1,5 @@
+//imports
+
 // set canvas width height relativity
 const canvas = document.querySelector('canvas')
 canvas.setAttribute('height', getComputedStyle(canvas)['height'])
@@ -10,7 +12,7 @@ start.addEventListener('click', game)
 
 let background = document.querySelector('#background')
 
-c.drawImage(background, 0, 0, canvas.height, canvas.width)
+//c.drawImage(background, 0, 0, canvas.height, canvas.width)
 
 let mainMenu = document.querySelector('#mainMenu')
 let restart = document.querySelector('#restart')
@@ -20,11 +22,12 @@ let d = document.querySelector('body')
 
 // set what will pull our character downward
 let gravity = 0.6
+// to control bullets
 
 //character creation
 class Character {
     // make position track instead of x or y
-    constructor(position) {
+    constructor(position, bulletController) {
         this.position = position
         // velocity to add speed left or right
         this.velocity = {
@@ -38,6 +41,17 @@ class Character {
     append() {
         c.fillStyle = 'green'
         c.fillRect(this.position.x, this.position.y, 20, 20, this.height)
+    }
+
+    shoot() {
+        if (keys.x.pressed){
+        const speed = 5;
+        const delay = 7;
+        const bulletX = this.position.x + 20 / 2
+        const bulletY = this.position.y
+        this.bulletController.shoot(bulletX, bulletY, speed, delay)
+        console.log('shoot')
+        }
     }
     // new fuction that adds gravity and movement // collision??
     move() {
@@ -112,15 +126,14 @@ class Object {
 }
 
 // OBJECTS //
-const spike = new Object (500, 630, 40, 40, 'grey')
+const spike = new Object (500, 630, 40, 40, '#5A5A5A')
 const crow = new Object (323, 570, 20, 20, 'black')
 const tree = new Object (300, 450, 65, 300, 'brown')
-
 
 // first screen text
 function instructions() {
     const arrowKeys = new Text(150, 300, 'arrow keys to move left and right', 25)
-    const jump = new Text(240, 330, 'and space to jump', 22)
+    const jump = new Text(240, 330, 'and "z" to jump', 22)
     const jumpHere = new Text(160, 580, 'jump up here!', 10)
     const yay = new Text(170, 550, 'nice', 20)
     const wow = new Text(175, 480, 'wow', 15)
@@ -144,6 +157,9 @@ const keys = {
     a: {
         pressed: false
     },
+    x: {
+        pressed: false
+    }
 }
 
 function collision() {
@@ -156,9 +172,7 @@ function collision() {
     } 
     
 }
-function crowTalk() {
-    c.clearRect(0, 0, canvas.width, canvas.height)
-}
+
 
 function main() {
     location.reload()
@@ -210,11 +224,12 @@ function takeDamage() {
     }
 }
 
+
 // the game function that will run when start button is pressed
 function game() {
     start.style.display = 'none'
     c.clearRect(0, 0, canvas.width, canvas.height)
-    c.drawImage(background, 0, 0, canvas.height, canvas.width)
+    //c.drawImage(background, 0, 0, canvas.height, canvas.width)
     tree.append()
     crow.append()
     spike.append()
@@ -230,17 +245,16 @@ function game() {
     //spawn guy
     // make first screen
     takeDamage()
-
+   
+    
     // idk what this does completely but it makes it work
     //like animates it
-    window.requestAnimationFrame(game)
-    
+    collision()
     //set guy velocity
     // somehow made collision
-    collision()
     // console.log(guy.position.x)
+    window.requestAnimationFrame(game)
 }
-
 
 //movement
 window.addEventListener('keydown', (e) => {
@@ -251,11 +265,16 @@ window.addEventListener('keydown', (e) => {
         case 'ArrowLeft':
             keys.a.pressed = true
         break
-        case ' ':
+        case 'z':
             // single jump !
             if(guy.velocity.y === 0) {
             guy.velocity.y = -10}
         break
+        case 'x':
+            keys.x.pressed = true
+        break
+
+
     }
 })
 // the buttons up do nothing, remove any velocity
@@ -267,5 +286,7 @@ window.addEventListener('keyup', (e) => {
         case 'ArrowLeft':
             keys.a.pressed = false
         break
+        
+
     }
 })

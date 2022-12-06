@@ -14,9 +14,17 @@ window.addEventListener('keydown', (e) => {
     switch (e.key) {
         case 'ArrowRight':
             keys.d.pressed = true
+            guy.currentFrame++
+            if(guy.currentFrame === 3) {
+                guy.currentFrame = 0
+            }
         break
         case 'ArrowLeft':
             keys.a.pressed = true
+            guy.currentFrame++
+            if(guy.currentFrame === 3) {
+                guy.currentFrame = 0
+            }
         break
         case 'z':
             // single jump !
@@ -25,6 +33,7 @@ window.addEventListener('keydown', (e) => {
         break
         case 'x':
             keys.x.pressed = true
+            console.log('shot')
         break
 
 
@@ -35,9 +44,11 @@ window.addEventListener('keyup', (e) => {
     switch (e.key) {
         case 'ArrowRight':
             keys.d.pressed = false
+            guy.currentFrame = 0
         break
         case 'ArrowLeft':
             keys.a.pressed = false
+            guy.currentFrame = 0
         break
     }
 })

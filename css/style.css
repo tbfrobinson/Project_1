@@ -64,6 +64,10 @@ canvas {
     display: none;
 }
 
+#audio {
+    display: none;
+}
+
 #restart {
     position: absolute;
     top: 55%;

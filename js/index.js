@@ -22,6 +22,21 @@ let mainMenu = document.querySelector('#mainMenu')
 let restart = document.querySelector('#restart')
 c.drawImage(startScreen, 0, 0)
 
+// music section!
+let startMusic = document.querySelector('#audio')
+let letMusic = 'yes'
+
+music.addEventListener('click', () => {
+    if(letMusic === 'yes') {
+        letMusic = 'no'
+        startMusic.pause();
+        startMusic.currentTime = 0
+} else {
+    letMusic = 'yes'
+    startMusic.play()
+}}
+)
+
 let gravity = 0.3
 
 options.addEventListener('click', () => {
@@ -104,7 +119,7 @@ function win() {
     keys.b.pressed = false
     keys.f.pressed = false
     guy.velocity.y = 0.1
-
+    
     c.clearRect(0, 0, canvas.width, canvas.height)
     const winText = new Text(180, 170, 'YOU WIN', '70px Arial')
     winText.append()
@@ -119,11 +134,13 @@ const instructions = new Text(60, 170, 'walk around with the arrow keys', '40px 
 const instructionsTwo = new Text(180, 220, 'jump with z!', '30px Arial')
 
 
+
+
 // the game function that will run when start button is pressed
 function game() {
     start.style.display = 'none'
     options.style.display = 'none'
-   
+    
     window.requestAnimationFrame(game)
     c.clearRect(0, 0, canvas.width, canvas.height)
     
@@ -150,7 +167,7 @@ function game() {
         
     } else if (guy.position.x > 370 && guy.position.x < 480) {
         crowDetails.append()
-       
+        
     } else if (guy.position.x > 600) {
         crowWarn.append()
     }

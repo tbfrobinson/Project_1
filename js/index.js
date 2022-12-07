@@ -39,6 +39,13 @@ back.addEventListener('click', () => {
     back.style.display = 'none'
 })
 
+const deathScreen = new Sprite({
+    position: {
+        x: 0,
+        y: 0
+    },
+    imageSrc: 'img/death.png'
+})
 // set background
 const screenOne = new Sprite({
     position: {
@@ -77,6 +84,7 @@ function restartGame() {
     mainMenu.style.display = 'none'
     restart.style.display = 'none'
     guy.position.x = 1
+    guy.position.y = 510
 }
 function gameOver() {
     keys.d.pressed = false
@@ -84,11 +92,23 @@ function gameOver() {
     guy.velocity.y = 0.1
     
     c.clearRect(0, 0, canvas.width, canvas.height)
+    deathScreen.draw()
     const gameOver = new Text(180, 170, 'LOL U DIED', '70px Arial')
     gameOver.append()
     mainMenu.style.display = 'block'
     restart.style.display = 'block'
     restart.addEventListener('click', restartGame)
+    mainMenu.addEventListener('click', main)
+}
+function win() {
+    keys.b.pressed = false
+    keys.f.pressed = false
+    guy.velocity.y = 0.1
+
+    c.clearRect(0, 0, canvas.width, canvas.height)
+    const winText = new Text(180, 170, 'YOU WIN', '70px Arial')
+    winText.append()
+    mainMenu.style.display = 'block'
     mainMenu.addEventListener('click', main)
 }
 
@@ -165,5 +185,9 @@ function gameTwo(){
     if(keys.z.pressed) {newGuy.position.y - 15}
     console.log(guy.position.x, newGuy.position.x)
     
+    if (newGuy.position.x > 600) {
+        win()
+        console.log('win!')
+    }
     window.requestAnimationFrame(gameTwo)
 }

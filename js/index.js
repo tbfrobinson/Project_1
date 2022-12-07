@@ -1,7 +1,6 @@
 //imports
 
 // set canvas width height relativity
-let d = document.querySelector('body')
 
 const canvas = document.querySelector('canvas')
 canvas.setAttribute('height', getComputedStyle(canvas)['height'])
@@ -17,35 +16,53 @@ const options = document.querySelector('#options')
 const music = document.querySelector('#music')
 const sfx = document.querySelector('#sfx')
 const back = document.querySelector('#back')
-start.addEventListener('click', game)
 let mainMenu = document.querySelector('#mainMenu')
 let restart = document.querySelector('#restart')
 c.drawImage(startScreen, 0, 0)
 
+
+let letSfx = 'yes'
 // music section!
 let startMusic = document.querySelector('#audio')
 let letMusic = 'yes'
 
+const raven = new Audio()
+raven.src = 'music/raven.m4a'
+
+sfx.addEventListener('click', () => {
+    if(letSfx === 'yes') {
+        letSfx = 'no'
+    } else {
+        letSfx = 'yes'
+    }
+})
 music.addEventListener('click', () => {
     if(letMusic === 'yes') {
         letMusic = 'no'
         startMusic.pause();
         startMusic.currentTime = 0
-} else {
-    letMusic = 'yes'
-    startMusic.play()
-}}
-)
-
-let gravity = 0.3
-
+    } else {
+        letMusic = 'yes'
+        startMusic.play()
+    }}
+    )
+    
+    let gravity = 0.6
+    
+start.addEventListener('click', () => {
+    game()
+    if(letMusic === 'yes') {
+    startMusic.src = 'music/crowMusic.m4a'
+    }
+})
+//
 options.addEventListener('click', () => {
     start.style.display = 'none'
-    options.style.display = 'none'
+     options.style.display = 'none'
     music.style.display = 'block'
     sfx.style.display = 'block'
     back.style.display = 'block'
-})
+    })
 back.addEventListener('click', () => {
     start.style.display = 'block'
     options.style.display = 'block'
@@ -91,6 +108,8 @@ const newGuy = new Character ({position: {
 frameRate : 3
 })
 
+
+
 function main() {
     location.reload()
 }
@@ -116,6 +135,8 @@ function gameOver() {
     mainMenu.addEventListener('click', main)
 }
 function win() {
+    keys.a.pressed = false
+    keys.d.pressed = false
     keys.b.pressed = false
     keys.f.pressed = false
     guy.velocity.y = 0.1
@@ -163,6 +184,9 @@ function game() {
         instructionsTwo.append()
     }
     if (guy.position.x > 200 && guy.position.x < 320) {
+        if(letSfx === 'yes'){
+        raven.play()
+    }
         crowHello.append()
         
     } else if (guy.position.x > 370 && guy.position.x < 480) {
@@ -177,13 +201,11 @@ function game() {
     }
     if(guy.position.x > 670){
         gameTwo()
-        cancel(game)
+        window.cancelAnimationFrame(game)
     }
     
 }
-function cancel(e) {
-    window.cancelAnimationFrame(e)
-}
+
 
 
 function gameTwo(){
@@ -208,3 +230,7 @@ function gameTwo(){
     }
     window.requestAnimationFrame(gameTwo)
 }
+
+window.addEventListener('DOMContentLoaded', () => {
+    startMusic.play()
+})

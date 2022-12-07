@@ -1,3 +1,6 @@
+const walk = new Audio()
+walk.src = 'music/walk.m4a'
+
 const keys = {
     f: {
         pressed: false
@@ -24,7 +27,8 @@ window.addEventListener('keydown', (e) => {
         case 'ArrowRight':
             keys.f.pressed = true
             keys.d.pressed = true
-            guy.currentFrame++
+            if(letSfx === 'yes') {
+                walk.play()}            guy.currentFrame++
             if(guy.currentFrame === 3) {
                 guy.currentFrame = 0
             }
@@ -36,6 +40,8 @@ window.addEventListener('keydown', (e) => {
         case 'ArrowLeft':
             keys.b.pressed = true
             keys.a.pressed = true
+            if(letSfx === 'yes') {
+                walk.play()} 
             guy.currentFrame++
             if(guy.currentFrame === 3) {
                 guy.currentFrame = 0
@@ -67,11 +73,15 @@ window.addEventListener('keyup', (e) => {
             keys.f.pressed = false
             keys.d.pressed = false
             guy.currentFrame = 0
+            if(letSfx === 'yes') {
+            walk.pause()}
         break
         case 'ArrowLeft':
             keys.b.pressed = false
             keys.a.pressed = false
             guy.currentFrame = 0
+            if(letSfx === 'yes') {
+                walk.pause()}
         break
         case 'x':
             keys.x.pressed = false

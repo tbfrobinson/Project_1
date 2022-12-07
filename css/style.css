@@ -65,7 +65,14 @@ canvas {
 }
 
 #audio {
-    display: none;
+    display: block;
+    position: absolute;
+    top: 110%;
+    left: 45%;
+    z-index: 0;
+    width: 100px;
+    height: 70px;
+
 }
 
 #restart {

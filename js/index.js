@@ -11,37 +11,62 @@ const c = canvas.getContext('2d')
 
 
 // buttons
+const startScreen = document.querySelector('#startScreen')
 const start = document.querySelector('#start')
-// start.addEventListener('click', game)
+const options = document.querySelector('#options')
+const music = document.querySelector('#music')
+const sfx = document.querySelector('#sfx')
+const back = document.querySelector('#back')
+start.addEventListener('click', game)
 let mainMenu = document.querySelector('#mainMenu')
 let restart = document.querySelector('#restart')
+c.drawImage(startScreen, 0, 0)
 
+let gravity = 0.3
 
-let background
+options.addEventListener('click', () => {
+    start.style.display = 'none'
+    options.style.display = 'none'
+    music.style.display = 'block'
+    sfx.style.display = 'block'
+    back.style.display = 'block'
+})
+back.addEventListener('click', () => {
+    start.style.display = 'block'
+    options.style.display = 'block'
+    music.style.display = 'none'
+    sfx.style.display = 'none'
+    back.style.display = 'none'
+})
 
-let gravity = 0.6
-
-let level = 1
-if (level === 1) {
-    background = '/img/screenOne.png'
-}
-if (level === 2) {
-    background = '/img/guyBackwards.png'
-}
 // set background
 const screenOne = new Sprite({
     position: {
         x: 0,
         y: 0
     },
-    imageSrc: background
+    imageSrc: 'img/screenOne.png'
+})
+const screenTwo = new Sprite({
+    position: {
+        x: 0,
+        y: 0
+    },
+    imageSrc: ''
 })
 // create character
 const guy = new Character({position: {
     x: 1,
-    y: 610,
+    y: 510,
 }, imageSrc: 'img/guy.png',
 frameRate: 3
+})
+
+const newGuy = new Character ({position: {
+    x: 1,
+    y: 510,
+}, imageSrc: 'img/guy.png',
+frameRate : 3
 })
 
 function main() {
@@ -76,45 +101,66 @@ const instructionsTwo = new Text(180, 220, 'jump with z!', '30px Arial')
 
 // the game function that will run when start button is pressed
 function game() {
+    start.style.display = 'none'
+    options.style.display = 'none'
+   
     window.requestAnimationFrame(game)
     c.clearRect(0, 0, canvas.width, canvas.height)
-    screenOne.draw()
-    guy.move()
+    
     // action
     // winning condition
     
+    screenOne.draw()
+    guy.move()
     
     guy.velocity.x = 0
     if(guy.position.x < 1) {
         keys.a.pressed = false
     } 
-    if (keys.d.pressed) {guy.velocity.x = 4}
-    else if (keys.a.pressed) {guy.velocity.x = -4}
+    if (keys.d.pressed) {guy.velocity.x = 3}
+    else if (keys.a.pressed) {guy.velocity.x = -3}
     
-    if (background == '/img/screenOne.png') {
+    
     if (guy.position.x < 140) {
         instructions.append()
         instructionsTwo.append()
     }
     if (guy.position.x > 200 && guy.position.x < 320) {
         crowHello.append()
-        console.log('crow hello')
+        
     } else if (guy.position.x > 370 && guy.position.x < 480) {
         crowDetails.append()
-        console.log('crow go up mountain')
+       
     } else if (guy.position.x > 600) {
         crowWarn.append()
     }
-
-    if (guy.position.x >= 525 && guy.position.x <= 593 && guy.position.y >= 530) {
-        console.log('gameover')
+    if (guy.position.x >= 525 && guy.position.x <= 593 && guy.position.y >= 540) {
+        
         gameOver()
     }
     if(guy.position.x > 670){
-        level = 2
+        gameTwo()
+        cancel(game)
     }
-    console.log(level, screenOne)
-}
     
 }
-game()
+function cancel(e) {
+    window.cancelAnimationFrame(e)
+}
+
+
+function gameTwo(){
+    c.clearRect(0, 0, canvas.width, canvas.height)
+    screenTwo.draw()
+    newGuy.move()
+    // console.log(newGuy.position.x, newGuy.position.y)
+    newGuy.velocity.x = 0
+    if(newGuy.position.x < 1) {
+        keys.a.pressed = false
+    } 
+    if (keys.f.pressed) {newGuy.velocity.x = .03}
+    else if (keys.b.pressed) {newGuy.velocity.x = -.03}
+    if(keys.z.pressed) {newGuy.velocity.y -= 15}
+    
+    window.requestAnimationFrame(gameTwo)
+}

@@ -21,11 +21,47 @@ canvas {
 
 #start {
     position: absolute;
-    left: 50%;
+    left: 53%;
     top: 40%;
     width: 200px;
-    padding: 10px;
+    padding: 20px;
     transform: translate(-50%, -50%)
+}
+#options {
+    position: absolute;
+    left: 53%;
+    top: 50%;
+    width: 200px;
+    padding: 20px;
+    transform: translate(-50%, -50%)
+}
+
+#music {
+    position: absolute;
+    left: 53%;
+    top: 40%;
+    width: 200px;
+    padding: 20px;
+    transform: translate(-50%, -50%);
+    display: none
+}
+#sfx {
+    position: absolute;
+    left: 53%;
+    top: 50%;
+    width: 200px;
+    padding: 20px;
+    transform: translate(-50%, -50%);
+    display: none;
+}
+#back {
+    position: absolute;
+    left: 53%;
+    top: 58%;
+    width: 80px;
+    padding: 10px;
+    transform: translate(-50%, -50%);
+    display: none;
 }
 
 #restart {

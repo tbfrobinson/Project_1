@@ -29,6 +29,10 @@ let letMusic = 'yes'
 const raven = new Audio()
 raven.src = 'music/raven.m4a'
 
+function musicChange(e) {
+    startMusic.src = e
+}
+
 sfx.addEventListener('click', () => {
     if(letSfx === 'yes') {
         letSfx = 'no'
@@ -52,7 +56,7 @@ music.addEventListener('click', () => {
 start.addEventListener('click', () => {
     game()
     if(letMusic === 'yes') {
-    startMusic.src = 'music/crowMusic.m4a'
+    musicChange('music/crowMusic.m4a')
     }
 })
 //
@@ -201,7 +205,10 @@ function game() {
     }
     if(guy.position.x > 670){
         gameTwo()
+        musicChange('music/finalScreen.m4a')
         window.cancelAnimationFrame(game)
+        
+        
     }
     
 }
@@ -212,6 +219,8 @@ function gameTwo(){
     keys.a.pressed = false
     keys.d.pressed = false
     c.clearRect(0, 0, canvas.width, canvas.height)
+  
+    
     screenTwo.draw()
     newGuy.move()
     // console.log(newGuy.position.x, newGuy.position.y)

@@ -52,7 +52,7 @@ const screenTwo = new Sprite({
         x: 0,
         y: 0
     },
-    imageSrc: ''
+    imageSrc: 'img/screenTwo.png'
 })
 // create character
 const guy = new Character({position: {
@@ -150,17 +150,20 @@ function cancel(e) {
 
 
 function gameTwo(){
+    keys.a.pressed = false
+    keys.d.pressed = false
     c.clearRect(0, 0, canvas.width, canvas.height)
     screenTwo.draw()
     newGuy.move()
     // console.log(newGuy.position.x, newGuy.position.y)
     newGuy.velocity.x = 0
     if(newGuy.position.x < 1) {
-        keys.a.pressed = false
+        keys.b.pressed = false
     } 
     if (keys.f.pressed) {newGuy.velocity.x = .03}
     else if (keys.b.pressed) {newGuy.velocity.x = -.03}
-    if(keys.z.pressed) {newGuy.velocity.y -= 15}
+    if(keys.z.pressed) {newGuy.position.y - 15}
+    console.log(guy.position.x, newGuy.position.x)
     
     window.requestAnimationFrame(gameTwo)
 }

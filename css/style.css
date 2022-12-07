@@ -22,7 +22,7 @@ canvas {
 #start {
     position: absolute;
     left: 53%;
-    top: 40%;
+    top: 50%;
     width: 200px;
     padding: 20px;
     transform: translate(-50%, -50%)
@@ -30,7 +30,7 @@ canvas {
 #options {
     position: absolute;
     left: 53%;
-    top: 50%;
+    top: 65%;
     width: 200px;
     padding: 20px;
     transform: translate(-50%, -50%)
@@ -39,7 +39,7 @@ canvas {
 #music {
     position: absolute;
     left: 53%;
-    top: 40%;
+    top: 50%;
     width: 200px;
     padding: 20px;
     transform: translate(-50%, -50%);
@@ -48,7 +48,7 @@ canvas {
 #sfx {
     position: absolute;
     left: 53%;
-    top: 50%;
+    top: 60%;
     width: 200px;
     padding: 20px;
     transform: translate(-50%, -50%);
@@ -57,7 +57,7 @@ canvas {
 #back {
     position: absolute;
     left: 53%;
-    top: 58%;
+    top: 68%;
     width: 80px;
     padding: 10px;
     transform: translate(-50%, -50%);

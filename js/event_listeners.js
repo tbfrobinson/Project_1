@@ -50,7 +50,7 @@ window.addEventListener('keydown', (e) => {
             if(guy.velocity.y === 0) {
             guy.velocity.y = -12}
             if(newGuy.velocity.y === 0) {
-                newGuy.velocity.y = -15
+                keys.z.pressed = true
             }
         break
         case 'x':

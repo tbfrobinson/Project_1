@@ -191,7 +191,7 @@ const crowHello = new Text(433, 400, 'hey you, come closer', '12px Arial')
 const crowDetails = new Text(415, 390, 'I saw some guy go up this mountain with your head', '11px Arial')
 const crowWarn = new Text(433, 400, "don't die on that spike by the way", '12px Arial')
 const instructions = new Text(60, 170, 'walk around with the arrow keys', '40px Arial')
-const instructionsTwo = new Text(180, 220, 'jump with 'z'!', '30px Arial')
+const instructionsTwo = new Text(180, 220, 'jump with z!', '30px Arial')
 
 
 

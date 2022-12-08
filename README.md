@@ -1,7 +1,7 @@
 # THE Official Saving the World Video Game tm real
 ## officially for real saving the world this time (actually)
 
-Atlas has lost his head, head up the mountain to save the world and your head!
+Atlas has lost his head, head up the mountain to save the world and his head!
 
 https://tbfrobinson.github.io/Project_1/
 

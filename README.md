@@ -6,7 +6,6 @@ Atlas has lost his head, head up the mountain to save the world and your head!
 https://tbfrobinson.github.io/Project_1/
 
 ## Approach and technologies
-### 'we have the technology'
 - Javascript canvas
 - class based character construction
 - not module based

@@ -26,8 +26,17 @@ let letSfx = 'yes'
 let startMusic = document.querySelector('#audio')
 let letMusic = 'yes'
 
+const hecticMusic = new Audio()
+hecticMusic.src = 'music/finalScreen.m4a'
+
+const victoryMusic = new Audio()
+victoryMusic.src = 'music/victory.m4a'
+
 const raven = new Audio()
 raven.src = 'music/raven.m4a'
+
+const death = new Audio()
+death.src = 'music/death.m4a'
 
 function musicChange(e) {
     startMusic.src = e
@@ -97,6 +106,13 @@ const screenTwo = new Sprite({
     },
     imageSrc: 'img/screenTwo.png'
 })
+const victory = new Sprite({
+    position: {
+        x: 0,
+        y: 0
+    },
+    imageSrc: 'img/victory.png'
+})
 // create character
 const guy = new Character({position: {
     x: 1,
@@ -123,14 +139,27 @@ function restartGame() {
     restart.style.display = 'none'
     guy.position.x = 1
     guy.position.y = 510
+    if(letMusic === 'yes'){
+    death.pause()
+    startMusic.play()
+    }
+    
 }
 function gameOver() {
     keys.d.pressed = false
     keys.a.pressed = false
+    guy.velocity.x = 0
     guy.velocity.y = 0.1
     
     c.clearRect(0, 0, canvas.width, canvas.height)
     deathScreen.draw()
+    
+    if(letMusic === 'yes') {
+        startMusic.pause()
+        death.play()
+    }
+
+
     const gameOver = new Text(180, 170, 'LOL U DIED', '70px Arial')
     gameOver.append()
     mainMenu.style.display = 'block'
@@ -147,6 +176,12 @@ function win() {
     
     c.clearRect(0, 0, canvas.width, canvas.height)
     const winText = new Text(180, 170, 'YOU WIN', '70px Arial')
+    if(letMusic === 'yes'){
+    hecticMusic.pause()
+    victoryMusic.play()
+    }
+    victory.draw()
+
     winText.append()
     mainMenu.style.display = 'block'
     mainMenu.addEventListener('click', main)
@@ -205,10 +240,11 @@ function game() {
     }
     if(guy.position.x > 670){
         gameTwo()
-        musicChange('music/finalScreen.m4a')
         window.cancelAnimationFrame(game)
-        
-        
+        startMusic.pause()
+        if(letMusic === 'yes'){
+        hecticMusic.play()
+        }
     }
     
 }
@@ -219,7 +255,8 @@ function gameTwo(){
     keys.a.pressed = false
     keys.d.pressed = false
     c.clearRect(0, 0, canvas.width, canvas.height)
-  
+    
+    
     
     screenTwo.draw()
     newGuy.move()
